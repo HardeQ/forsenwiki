@@ -27,6 +27,12 @@ export {
 } from '../components/editor/plugins/FloatBlock/FloatBlock';
 
 export {
+	$createCollapsibleNode,
+	$isCollapsibleNode,
+	CollapsibleNode,
+} from '../components/editor/plugins/Collapsible/Collapsible';
+
+export {
 	$createGalleryNode,
 	GalleryNode,
 	$isGalleryNode,
@@ -47,6 +53,7 @@ export { DiffATableNode } from '../components/editor/plugins/Diff/ATable';
 export { DiffTableRowNode } from '../components/editor/plugins/Diff/TableRow';
 export { DiffTableCellNode } from '../components/editor/plugins/Diff/TableCell';
 export { DiffFloatBlockNode } from '../components/editor/plugins/Diff/FloatBlock';
+export { DiffCollapsibleNode } from '../components/editor/plugins/Diff/Collapsible';
 export { DiffGalleryNode } from '$lib/components/editor/plugins/Diff/Gallery';
 
 export { FallbackNode } from '../components/editor/plugins/Fallback/Fallback';

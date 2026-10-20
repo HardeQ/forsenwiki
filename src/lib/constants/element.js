@@ -35,6 +35,7 @@ export const blockTypeLabels = {
 	videoembed: 'Video / Audio',
 	image: 'Image',
 	'float-block': 'Float block',
+	collapsible: 'Collapsible',
 	'a-link': 'Link',
 	gallery: 'Gallery',
 	linebreak: '',

@@ -16,6 +16,7 @@ import {
 	ImageNode,
 	VideoEmbedNode,
 	FloatBlockNode,
+	CollapsibleNode,
 	AHeadingNode,
 	ATableCellNode,
 	ATableNode,
@@ -62,12 +63,13 @@ export const editableTheme = {
 	tableCellResizer: 'tableCellResizer',
 	tableCellSelected: 'tableCellSelected',
 	floatBoxShadowEditable: '0px 0px 4px #696969',
+	collapsibleEditable: true,
 	floatResponsive,
 	text: {
 		bold: 'font-semibold',
 		italic: 'italic',
 	},
-	link: 'pointer-events-none'
+	link: 'pointer-events-none',
 };
 
 export const htmlExport = new Map([
@@ -120,6 +122,7 @@ export const articleNodes = [
 	TableCellNode,
 	TableRowNode,
 	FloatBlockNode,
+	CollapsibleNode,
 
 	GalleryNode,
 

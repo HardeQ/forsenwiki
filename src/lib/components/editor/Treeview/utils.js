@@ -13,6 +13,7 @@ import { alignmentIcons, blockTypeIcons } from '$lib/constants/blockTypeIcons';
 import {
 	$isImageNode as isImageNode,
 	$isVideoEmbedNode as isVideoEmbedNode,
+	$isCollapsibleNode as isCollapsibleNode,
 } from '$lib/lexical/custom';
 import { DOMAIN } from '$lib/environment/environment';
 import { getURLAndTitle } from '../plugins/VideoEmbed/VideoEmbed';
@@ -109,6 +110,14 @@ export const getLabelForNode = (node) => {
 
 		if (altText) {
 			return shortenText(altText);
+		}
+	}
+
+	if (isCollapsibleNode(node)) {
+		const title = node.getTitle();
+
+		if (title) {
+			return shortenText(title);
 		}
 	}
 

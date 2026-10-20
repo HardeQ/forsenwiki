@@ -7,6 +7,7 @@
 	import Video from './Video/index.svelte';
 	import Table from './Table/index.svelte';
 	import FloatBlock from './FloatBlock/index.svelte';
+	import Collapsible from './Collapsible/index.svelte';
 	import Link from './Link/index.svelte';
 	import Globals from './Globals/index.svelte';
 	import InsertButton from './InsertButton/index.svelte';
@@ -43,6 +44,7 @@
 
 <div class="flex flex-wrap items-stretch">
 	<FloatBlock {selectedNode} />
+	<Collapsible {selectedNode} />
 	<Table {selectedNode} />
 	<Image {selectedNode} />
 	<Video {selectedNode} />

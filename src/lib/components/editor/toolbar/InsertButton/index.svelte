@@ -16,6 +16,7 @@
 	import { INSERT_IMAGE_COMMAND } from '../../plugins/Image/ImagePlugin.svelte';
 	import { INSERT_VIDEOEMBED_COMMAND } from '../../plugins/VideoEmbed/VideoEmbedPlugin.svelte';
 	import { INSERT_FLOATBLOCK_COMMAND } from '../../plugins/FloatBlock/FloatBlockPlugin.svelte';
+	import { INSERT_COLLAPSIBLE_COMMAND } from '../../plugins/Collapsible/CollapsiblePlugin.svelte';
 	import { INSERT_GALLERY_COMMAND } from '../../plugins/Gallery/GalleryPlugin.svelte';
 	import { insertParagraph } from './insertParagraph';
 
@@ -62,6 +63,9 @@
 			height: undefined,
 		});
 
+	const insertCollapsible = () =>
+		editor.dispatchCommand(INSERT_COLLAPSIBLE_COMMAND, { title: undefined, open: false });
+
 	const insertGallery = () => editor.dispatchCommand(INSERT_GALLERY_COMMAND, {});
 
 	const insertElementTypeOptions = [
@@ -104,6 +108,11 @@
 			value: 'floatblock',
 			label: blockTypeLabels['float-block'],
 			insertFunc: insertFloatBlock,
+		},
+		{
+			value: 'collapsible',
+			label: blockTypeLabels.collapsible,
+			insertFunc: insertCollapsible,
 		},
 	];
 

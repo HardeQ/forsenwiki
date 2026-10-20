@@ -24,6 +24,7 @@
 	import VideoEmbedPlugin from './plugins/VideoEmbed/VideoEmbedPlugin.svelte';
 	import TablePlugin from './plugins/Overrides/Table/TablePlugin.svelte';
 	import FloatBlockPlugin from './plugins/FloatBlock/FloatBlockPlugin.svelte';
+	import CollapsiblePlugin from './plugins/Collapsible/CollapsiblePlugin.svelte';
 	import SelectionOverrides from './plugins/SelectionOverrides.svelte';
 	import GalleryPlugin from './plugins/Gallery/GalleryPlugin.svelte';
 	import ImageFixerModalButton from './ImageFixer/index.svelte';
@@ -77,6 +78,8 @@
 		<TablePlugin hasCellBackgroundColor={false} />
 
 		<FloatBlockPlugin />
+
+		<CollapsiblePlugin />
 
 		<CollaborationPlugin {id} {providerFactory} shouldBootstrap={false} />
 

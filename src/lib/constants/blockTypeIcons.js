@@ -15,6 +15,7 @@ import {
 	ListCheckIcon,
 	ListIcon,
 	ListOrderedIcon,
+	ChevronsUpDownIcon,
 	PlayIcon,
 	QuoteIcon,
 	Rows2Icon,
@@ -45,6 +46,7 @@ export const blockTypeIcons = {
 	quote: QuoteIcon,
 
 	'float-block': SquareSquareIcon,
+	collapsible: ChevronsUpDownIcon,
 	'a-table': TableIcon,
 	videoembed: PlayIcon,
 	audio: AudioLinesIcon,
