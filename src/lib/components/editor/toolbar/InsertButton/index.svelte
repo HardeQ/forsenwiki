@@ -64,7 +64,7 @@
 		});
 
 	const insertCollapsible = () =>
-		editor.dispatchCommand(INSERT_COLLAPSIBLE_COMMAND, { title: undefined, open: false });
+		editor.dispatchCommand(INSERT_COLLAPSIBLE_COMMAND, { title: undefined });
 
 	const insertGallery = () => editor.dispatchCommand(INSERT_GALLERY_COMMAND, {});
 

@@ -16,34 +16,25 @@ const sanitizeTitle = (title) =>
  * @typedef {import('lexical').DOMExportOutput} DOMExportOutput
  * @typedef {import('lexical').LexicalEditor} LexicalEditor
  *
- * @typedef {SerializedElementNode & { title: string, open?: boolean, type: string }} SerializedCollapsibleNode
+ * @typedef {SerializedElementNode & { title: string, type: string }} SerializedCollapsibleNode
  */
 
 /**
- * @typedef {{ title?: string, open?: boolean }} CollapsibleNodePayload
+ * @typedef {{ title?: string }} CollapsibleNodePayload
  */
 
-/**
- * Renders as `<details><summary>Title</summary>...children</details>`.
- * The "[show]" / "[hide]" label is drawn by CSS, so the article page needs no JavaScript.
- */
 export class CollapsibleNode extends ElementNode {
 	/** @type {string} */
 	__title = COLLAPSIBLE_DEFAULT_TITLE;
 
-	/** @type {boolean} */
-	__open = false;
-
 	/**
 	 * @param {string} [title]
-	 * @param {boolean} [open] Whether the article is rendered expanded by default.
 	 * @param {NodeKey} [key]
 	 */
-	constructor(title = COLLAPSIBLE_DEFAULT_TITLE, open = false, key) {
+	constructor(title = COLLAPSIBLE_DEFAULT_TITLE, key) {
 		super(key);
 
 		this.__title = title;
-		this.__open = open;
 	}
 
 	static getType() {
@@ -55,7 +46,7 @@ export class CollapsibleNode extends ElementNode {
 	}
 
 	/**
-	 * @returns {import('lexical').DOMConversionMap}
+	 * @returns {import('lexical').DOMConversionMap | null}
 	 */
 	static importDOM() {
 		return {
@@ -63,13 +54,11 @@ export class CollapsibleNode extends ElementNode {
 				conversion: (domNode) => {
 					const summary = domNode.querySelector(':scope > summary');
 					const title = summary?.textContent?.trim() || undefined;
-					const open = domNode.hasAttribute('open');
 
-					return { node: $createCollapsibleNode({ title, open }) };
+					return { node: $createCollapsibleNode({ title }) };
 				},
 				priority: 1,
 			}),
-			// The title is read from the summary above, so drop it (and its children) from the content.
 			summary: () => ({
 				conversion: () => ({ node: null, after: () => [] }),
 				priority: 1,
@@ -81,7 +70,7 @@ export class CollapsibleNode extends ElementNode {
 	 * @param {CollapsibleNode} node
 	 */
 	static clone(node) {
-		return new CollapsibleNode(node.__title, node.__open, node.__key);
+		return new CollapsibleNode(node.__title, node.__key);
 	}
 
 	/** @param {SerializedCollapsibleNode} serializedNode */
@@ -97,7 +86,6 @@ export class CollapsibleNode extends ElementNode {
 			...super.exportJSON(),
 			type: CollapsibleNode.getType(),
 			title: this.getTitle(),
-			open: this.getOpen(),
 		};
 	}
 
@@ -113,20 +101,6 @@ export class CollapsibleNode extends ElementNode {
 
 	getTitle() {
 		return this.getLatest().__title;
-	}
-
-	/**
-	 * @param {boolean} [open]
-	 */
-	setOpen(open) {
-		const self = this.getWritable();
-		self.__open = Boolean(open);
-
-		return this;
-	}
-
-	getOpen() {
-		return Boolean(this.getLatest().__open);
 	}
 
 	/**
@@ -146,13 +120,10 @@ export class CollapsibleNode extends ElementNode {
 		details.appendChild(summary);
 
 		if (config?.theme?.collapsibleEditable) {
-			// The content has to stay reachable while editing, so the toggle is disabled in the editor.
-			// `open` is set from the node's state in the article, see updateDOM.
 			summary.contentEditable = 'false';
-			summary.addEventListener('click', (e) => e.preventDefault());
 		}
 
-		this.updateDOM(null, details, config);
+		this.updateDOM(null, details);
 
 		return details;
 	}
@@ -160,30 +131,18 @@ export class CollapsibleNode extends ElementNode {
 	/**
 	 * @param {CollapsibleNode | null} _
 	 * @param {HTMLDetailsElement} dom
-	 * @param {EditorConfig?} config
 	 */
-	updateDOM(_, dom, config) {
+	updateDOM(_, dom) {
 		const title = dom.querySelector(':scope > summary > .collapsible-title');
 
 		if (title && title.textContent !== this.getTitle()) {
 			title.textContent = this.getTitle();
 		}
 
-		// An attribute rather than `dom.open`, so it also survives the server-side DOM used for the HTML export.
-		const isOpen = config?.theme?.collapsibleEditable ? true : this.getOpen();
-
-		if (isOpen) {
-			dom.setAttribute('open', '');
-		} else {
-			dom.removeAttribute('open');
-		}
-
 		return false;
 	}
 
 	/**
-	 * Keeps the summary as the first DOM child, Lexical manages everything after it.
-	 *
 	 * @param {HTMLElement} dom
 	 */
 	getDOMSlot(dom) {
@@ -216,9 +175,9 @@ export class CollapsibleNode extends ElementNode {
 
 /** @param {CollapsibleNodePayload & { key?: NodeKey }} [payload] */
 export function $createCollapsibleNode(payload) {
-	const { title, open, key } = payload || {};
+	const { title, key } = payload || {};
 	return $applyNodeReplacement(
-		new CollapsibleNode(title != null ? sanitizeTitle(title) : undefined, Boolean(open), key)
+		new CollapsibleNode(title != null ? sanitizeTitle(title) : undefined, key)
 	);
 }
 

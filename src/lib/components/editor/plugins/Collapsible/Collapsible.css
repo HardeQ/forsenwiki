@@ -1,14 +1,12 @@
 @reference "../../../../../app.css";
 
-/* Wikipedia-style collapsible: a tinted header bar with a "[show]" / "[hide]" toggle on the end. */
 details.collapsible {
 	@apply forsen-wiki-theme-border my-2 overflow-hidden rounded-sm border;
 
 	> summary.collapsible-summary {
-		@apply relative flex min-h-10 cursor-pointer items-center justify-center bg-violet-900/25 px-16 py-2 text-center font-semibold select-none;
+		@apply relative cursor-pointer bg-violet-900/25 px-16 py-2 text-center font-semibold select-none;
 
-		/* Drop the native marker, the label below replaces it. */
-		list-style: none;
+		@apply list-none;
 
 		&::-webkit-details-marker {
 			display: none;
@@ -32,16 +30,11 @@ details.collapsible {
 		}
 	}
 
-	/* Everything after the summary is the user's content. */
 	> :not(summary) {
-		@apply mx-3;
+		@apply mx-3 last:mb-3;
 	}
 
-	> :nth-child(2) {
+	> summary + * {
 		@apply mt-3;
-	}
-
-	> :last-child {
-		@apply mb-3;
 	}
 }

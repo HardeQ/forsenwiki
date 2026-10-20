@@ -41,9 +41,9 @@
 	const editor = getEditor();
 
 	/** @param {CollapsibleNodePayload} payload */
-	const wrapperInsertCollapsible = ({ title, open }) => {
+	const wrapperInsertCollapsible = ({ title }) => {
 		editor.update(() => {
-			const collapsibleNode = createCollapsibleNode({ title, open });
+			const collapsibleNode = createCollapsibleNode({ title });
 
 			insertNodeToNearestRoot(collapsibleNode);
 
@@ -60,7 +60,6 @@
 	const INSERT_BEFORE = true;
 	const INSERT_AFTER = false;
 
-	// Collapsibles are shadow roots, so without this the caret can't leave one that's at the edge of its parent.
 	const insertParagraph = (atBefore = INSERT_BEFORE) => {
 		return editor.read(() => {
 			const selection = getSelection();

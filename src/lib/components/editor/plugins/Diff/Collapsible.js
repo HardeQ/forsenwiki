@@ -19,8 +19,6 @@ export class DiffCollapsibleNode extends CollapsibleNode {
 		super(
 			// @ts-ignore
 			node.title ?? node.__title,
-			// @ts-ignore
-			node.open ?? node.__open,
 			key
 		);
 
